@@ -50,7 +50,7 @@ async function fetch_url(url, opts) {
   return await fetch(url, opts).then((res) => res.json());
 }
 
-function set_pixel(
+async function set_pixel(
   access_token_in,
   x,
   y,
@@ -61,7 +61,7 @@ function set_pixel(
 
   let url = "https://gql-realtime-2.reddit.com/query";
 
-  axios({
+  await axios({
     method: "POST",
     url: "https://gql-realtime-2.reddit.com/query",
     headers: {
@@ -128,7 +128,7 @@ while (true) {
       pixel_color_index = y_set[pixel_x-299]
 
       console.log("target:"+pixel_x+":"+pixel_y+":color:"+pixel_color_index);
-      set_pixel(access_token, pixel_x, pixel_y, pixel_color_index);
+      await set_pixel(access_token, pixel_x, pixel_y, pixel_color_index);
       last_time_placed_pixel = Date.now();
       first = false;
     }
