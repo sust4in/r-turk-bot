@@ -39,7 +39,7 @@ var access_token_expires_at_timestamp = Date.now();
 var expires_at_timestamp = Date.now();
 
 // note: reddit limits us to place 1 pixel every 5 minutes
-const pixel_place_frequency = 300;
+const pixel_place_frequency = 300000;
 var first = true;
 
 function randomIntFromInterval(min, max) { // min and max included 
@@ -115,9 +115,11 @@ while (true) {
     expires_at_timestamp = current_timestamp + access_token_expires_in_seconds;
 
     console.log("received new access token: ", access_token);
+  }
+
 
     // draw pixel onto screen
-    if (
+  if (
       access_token != null &&
       (current_timestamp >= last_time_placed_pixel + pixel_place_frequency ||
         first == true)
@@ -132,5 +134,4 @@ while (true) {
       last_time_placed_pixel = Date.now();
       first = false;
     }
-  }
 }
