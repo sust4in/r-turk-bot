@@ -5,8 +5,8 @@
 // @description  Misak-ı milli
 // @author       Thanks Jared.
 // @match        https://hot-potato.reddit.com/embed*
-// @updateURL    
-// @downloadURL  
+// @updateURL
+// @downloadURL
 // @grant        GM_xmlhttpRequest
 // @connect      raw.githubusercontent.com
 // ==/UserScript==
@@ -104,7 +104,7 @@
             [27, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,27],
             [27, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,27],
             [27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27]];
-        
+
             let newDiv = document.createElement('div');
             newDiv.innerHTML = "<h2>Türkün Gücüyle Ezin!<h2>";
             document.body.prepend(newDiv);
@@ -117,21 +117,34 @@
             setTimeout(async () => {
             while(true) {
 
-                var pixel_x = getRandomNumber(299, 432)
-                var pixel_y = getRandomNumber(318, 399)
-                var y_set = ata_template[pixel_y-318]
-                var pixel_color_index = y_set[pixel_x-299]
+                var xStart = 299;
+                var xEnd = 432;
+                var yStart = 318;
+                var yEnd = 399;
 
-                var selectedPixel = placeApi.getPixel(pixel_x, pixel_y);
 
-                 if (colorMap[selectedPixel] ==! pixel_color_index)
-                 {
-                    console.log("setting", pixel_x, ",", pixel_y);
-                         await placeApi.setPixel(pixel_x, pixel_y, pixel_color_index);
-                         console.log("set pixel");
+                for(let x = xStart; x <= xEnd; x++) {
+                    for(let y = yStart; y <= yEnd; y++) {
+                        var selectedPixel = placeApi.getPixel(x, y);
 
-                         await sleep(5.5 * 60 * 1000)
+                        var y_set = ata_template[y-yStart]
+                        var pixel_color_index = y_set[x-xStart]
+
+                        if (colorMap[selectedPixel] !== pixel_color_index)
+                        {
+                                console.log("setting", x, ",", y);
+                                await placeApi.setPixel(x, y, pixel_color_index);
+                                console.log("set pixel");
+
+                                await sleep(5.5 * 60 * 1000)
+                        }
+                        else{
+                            await sleep(150)
+                        }
+                    }
                 }
+
+
                 // console.log(x, y, placeApi.getPixel(x, y));
                 // if (placeApi.getPixel(x, y) !== humanColorMap.black) {
                 //     console.log("setting", x, ",", y);
@@ -198,7 +211,7 @@
         };
     }
 
-  
+
 
     function createEvent(e, t) {
         return new CustomEvent(e, {
@@ -218,7 +231,7 @@
     }
 
     function getRandomNumber(min, max) {
-        return Math.random() * (max - min) + min;
+        return Math.floor(Math.random() * (max - min) + min);
     }
 
     function GM_fetch(url, opt){
