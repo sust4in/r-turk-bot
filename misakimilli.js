@@ -119,8 +119,8 @@
 
                 var xStart = 299;
                 var xEnd = 432;
-                var yStart = 318;
-                var yEnd = 399;
+                var yStart = 343;
+                var yEnd = 424;
 
 
                 for(let x = xStart; x <= xEnd; x++) {
@@ -136,7 +136,7 @@
                                 await placeApi.setPixel(x, y, pixel_color_index);
                                 console.log("set pixel");
 
-                                await sleep(5.5 * 60 * 1000)
+                                await sleep(5.3 * 60 * 1000)
                         }
                         else{
                             await sleep(150)
