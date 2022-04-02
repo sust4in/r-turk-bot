@@ -5,8 +5,8 @@
 // @description  Misak-ı milli
 // @author       Thanks Jared.
 // @match        https://hot-potato.reddit.com/embed*
-// @updateURL
-// @downloadURL
+// @updateURL    https://raw.githubusercontent.com/sust4in/r-turk-bot/main/misakimilli.js
+// @downloadURL  https://raw.githubusercontent.com/sust4in/r-turk-bot/main/misakimilli.js
 // @grant        GM_xmlhttpRequest
 // @connect      raw.githubusercontent.com
 // ==/UserScript==
